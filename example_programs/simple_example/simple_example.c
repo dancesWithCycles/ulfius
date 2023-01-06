@@ -179,10 +179,12 @@ int callback_get_test (const struct _u_request * request, struct _u_response * r
  * Callback function for route /users/info
  */
 int callback_get_users_info (const struct _u_request * request, struct _u_response * response, void * user_data) {
+  char * headers = print_map(request->map_header);
+  char * response_body = msprintf("This is the route /users/info\nmethod: \n%s\nheaders: \n%s\n",request->http_verb,headers);
   //TODO Why this casting?
   (void)(request);
   (void)(user_data);
-  ulfius_set_string_body_response(response, 200, "This is the route /users/info");
+  ulfius_set_string_body_response(response, 200, response_body);
   return U_CALLBACK_CONTINUE;
 }
 
