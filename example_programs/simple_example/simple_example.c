@@ -23,7 +23,7 @@
 
 #include "u_example.h"
 
-#define PORT 8537
+#define PORT 8080
 #define PREFIX "/test"
 #define PREFIXJSON "/testjson"
 #define PREFIXCOOKIE "/testcookie"
