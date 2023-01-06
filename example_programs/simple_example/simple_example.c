@@ -27,6 +27,7 @@
 #define PREFIX "/test"
 #define PREFIXJSON "/testjson"
 #define PREFIXCOOKIE "/testcookie"
+#define ROUTE_USERS_INFO "/users/info"
 
 /**
  * callback functions declaration
@@ -42,6 +43,8 @@ int callback_all_test_foo (const struct _u_request * request, struct _u_response
 int callback_get_cookietest (const struct _u_request * request, struct _u_response * response, void * user_data);
 
 int callback_default (const struct _u_request * request, struct _u_response * response, void * user_data);
+
+int callback_get_users_info (const struct _u_request * request, struct _u_response * response, void * user_data);
 
 /**
  * decode a u_map into a string
@@ -127,6 +130,7 @@ int main (int argc, char **argv) {
   ulfius_add_endpoint_by_val(&instance, "PUT", PREFIX, "/param/:foo", 0, &callback_all_test_foo, "user data 3");
   ulfius_add_endpoint_by_val(&instance, "DELETE", PREFIX, "/param/:foo", 0, &callback_all_test_foo, "user data 4");
   ulfius_add_endpoint_by_val(&instance, "GET", PREFIXCOOKIE, "/:lang/:extra", 0, &callback_get_cookietest, NULL);
+  ulfius_add_endpoint_by_val(&instance, "GET", ROUTE_USERS_INFO, NULL, 0, &callback_get_users_info, NULL);
   
   // default_endpoint declaration
   ulfius_set_default_endpoint(&instance, &callback_default, NULL);
@@ -168,6 +172,17 @@ int callback_get_test (const struct _u_request * request, struct _u_response * r
   (void)(request);
   (void)(user_data);
   ulfius_set_string_body_response(response, 200, "Hello World!");
+  return U_CALLBACK_CONTINUE;
+}
+
+/**
+ * Callback function for route /users/info
+ */
+int callback_get_users_info (const struct _u_request * request, struct _u_response * response, void * user_data) {
+  //TODO Why this casting?
+  (void)(request);
+  (void)(user_data);
+  ulfius_set_string_body_response(response, 200, "This is the route /users/info");
   return U_CALLBACK_CONTINUE;
 }
 
